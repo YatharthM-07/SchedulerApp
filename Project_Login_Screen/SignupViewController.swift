@@ -19,6 +19,9 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var termsNconditions: UITextView!
     @IBOutlet weak var fullNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
+    
+    @IBOutlet weak var createAccountButton: UIButton!
+    
     override func viewDidLoad() {
             super.viewDidLoad()
             setupTermsNConditions()
@@ -86,12 +89,27 @@ class SignupViewController: UIViewController {
            let imageName = textField.isSecureTextEntry ? "eye.slash" : "eye"
            button.setImage(UIImage(systemName: imageName), for: .normal)
        }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "signupToWelcome",
-               let vc = segue.destination as? TodayScreenViewController {
-                vc.firstName = extractedFirstName
-        }
+    
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "signupToWelcome",
+//               let vc = segue.destination as? TodayScreenViewController {
+//                vc.firstName = extractedFirstName
+//        }
+//    }
+    
+    @IBAction func textFieldsDidChange(_ sender: UITextField) {
+        let isFormValid =
+            !(fullNameTextField.text?.isEmpty ?? true) &&
+            !(emailTextField.text?.isEmpty ?? true) &&
+            !(passwordTextField.text?.isEmpty ?? true) &&
+            !(confirmPasswordTextField.text?.isEmpty ?? true) &&
+            passwordTextField.text == confirmPasswordTextField.text
+
+        createAccountButton.isEnabled = isFormValid
     }
+
+    
     @IBAction func createAccountTapped(_ sender: Any) {
 
             guard
@@ -109,27 +127,18 @@ class SignupViewController: UIViewController {
                 return
             }
 
-            let firstName = fullName
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-                .components(separatedBy: .whitespaces)
-                .filter { !$0.isEmpty }
-                .first ?? ""
+        let user = User(
+            fullName: fullName,
+            email: email,
+            password: password
+        )
 
-            let user = User(
-                fullName: firstName,
-                email: email,
-                password: password
-            )
+        let success = UserData.shared.saveUser(user)
 
-            let success = UserData.shared.saveUser(user)
-
-            if success {
-                print("Signup successful. User saved.")
-               
-            }
-           
-            extractedFirstName = firstName
-
+        if success {
+            print("Signup successful. User saved.")
+        }
+        
         }
 
 
