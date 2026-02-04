@@ -1,19 +1,17 @@
 //
-//  TodayScreenViewController.swift
-//  Project_Login_Screen
+//  TimeLineViewController.swift
+//  HomeScreen
 //
-//  Created by GEU on 02/02/26.
+//  Created by GEU on 03/02/26.
 //
 
 import UIKit
 
-class TodayScreenViewController: UIViewController {
+class TimeLineViewController: UIViewController {
 
-    @IBOutlet weak var welcomeLabel: UILabel!
-    var firstName: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-        welcomeLabel.text = "Welcome \(firstName)"
+
         // Do any additional setup after loading the view.
     }
     

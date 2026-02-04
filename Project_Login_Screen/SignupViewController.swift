@@ -19,6 +19,9 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var termsNconditions: UITextView!
     @IBOutlet weak var fullNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
+    
+    @IBOutlet weak var createAccountButton: UIButton!
+    
     override func viewDidLoad() {
             super.viewDidLoad()
             setupTermsNConditions()
@@ -87,50 +90,54 @@ class SignupViewController: UIViewController {
            button.setImage(UIImage(systemName: imageName), for: .normal)
        }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "signupToWelcome",
-               let vc = segue.destination as? TodayScreenViewController {
-                vc.firstName = extractedFirstName
+        if segue.identifier == "signupToWelcome" {
+            // nothing to do here
         }
     }
+    
+    
+    @IBAction func textFieldsDidChange(_ sender: UITextField) {
+        let isFormValid =
+            !(fullNameTextField.text?.isEmpty ?? true) &&
+            !(emailTextField.text?.isEmpty ?? true) &&
+            !(passwordTextField.text?.isEmpty ?? true) &&
+            !(confirmPasswordTextField.text?.isEmpty ?? true) &&
+            passwordTextField.text == confirmPasswordTextField.text
+
+        createAccountButton.isEnabled = isFormValid
+    }
+    
+    
     @IBAction func createAccountTapped(_ sender: Any) {
 
-            guard
-                let fullName = fullNameTextField.text, !fullName.isEmpty,
-                let email = emailTextField.text, !email.isEmpty,
-                let password = passwordTextField.text, !password.isEmpty,
-                let confirmPassword = confirmPasswordTextField.text, !confirmPassword.isEmpty
-            else {
-                print(" Error: All fields are required")
-                return
-            }
-
-            guard password == confirmPassword else {
-                print(" Error: Passwords do not match")
-                return
-            }
-
-            let firstName = fullName
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-                .components(separatedBy: .whitespaces)
-                .filter { !$0.isEmpty }
-                .first ?? ""
-
-            let user = User(
-                fullName: firstName,
-                email: email,
-                password: password
-            )
-
-            let success = UserData.shared.saveUser(user)
-
-            if success {
-                print("Signup successful. User saved.")
-               
-            }
-           
-            extractedFirstName = firstName
-
+        guard
+            let fullName = fullNameTextField.text, !fullName.isEmpty,
+            let email = emailTextField.text, !email.isEmpty,
+            let password = passwordTextField.text, !password.isEmpty,
+            let confirmPassword = confirmPasswordTextField.text, !confirmPassword.isEmpty
+        else {
+            print(" Error: All fields are required")
+            return
         }
+
+        guard password == confirmPassword else {
+            print(" Error: Passwords do not match")
+            return
+        }
+
+    let user = User(
+        fullName: fullName,
+        email: email,
+        password: password
+    )
+
+    let success = UserData.shared.saveUser(user)
+
+    if success {
+        print("Signup successful. User saved.")
+    }
+    
+    }
 
 
 }
