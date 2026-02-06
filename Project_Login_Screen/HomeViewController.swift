@@ -100,13 +100,13 @@ class HomeViewController: UIViewController {
 
            headerContainerView.backgroundColor = .clear
 
-           // Title: "Today"
+         
            titleLabel.translatesAutoresizingMaskIntoConstraints = false
            titleLabel.text = "Today"
            titleLabel.font = UIFont.systemFont(ofSize: 34, weight: .bold)
            titleLabel.textColor = .label
 
-           // Subtitle: current date, e.g. "Thursday, 4 Dec"
+           
            subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
            let formatter = DateFormatter()
            formatter.dateFormat = "EEEE, d MMM"
@@ -233,7 +233,7 @@ extension HomeViewController {
         return section
     }
     
-    /// Two-column grid for the "Missed Tasks" section, like the reference design.
+    
     func twoColumnSection(height: CGFloat) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(0.5),
@@ -351,7 +351,7 @@ extension HomeViewController: UICollectionViewDataSource {
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
 
-        // ✅ IMPORTANT: guard the kind
+        
         guard kind == UICollectionView.elementKindSectionHeader else {
             return UICollectionReusableView()
         }

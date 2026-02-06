@@ -23,11 +23,10 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var createAccountButton: UIButton!
     
     override func viewDidLoad() {
-            super.viewDidLoad()
-            setupTermsNConditions()
-            setupPasswordFields()
-        navigationController?.setNavigationBarHidden(false, animated: false)
-        }
+        super.viewDidLoad()
+        setupTermsNConditions()
+        setupPasswordFields()
+    }
     
     //setting up hyperlink for Terms & Conditions
     private func setupPasswordFields() {
@@ -59,9 +58,7 @@ class SignupViewController: UIViewController {
         }
     
     
-    @IBAction func backBtnTapped(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
-    }
+   
     
     
     @IBAction func togglePassword1(_ sender: UIButton) {
